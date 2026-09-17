@@ -1,0 +1,7 @@
+reduction_stage,travel_arcs,time_space_arcs,time_space_nodes,master_candidate_cells,travel_arcs_removed_from_previous,travel_arcs_removed_percent_from_previous,time_space_arcs_removed_from_previous,time_space_nodes_removed_from_previous,candidate_cells_removed_from_previous
+None,68800,69784,15600,360,0,0.0000,0,0,0
+R1,68800,69784,15600,360,0,0.0000,0,0,0
+R1+R2,14580,15564,4996,360,54220,78.8081,54220,10604,0
+R1+R2+R3,14580,15564,4996,360,0,0.0000,0,0,0
+R1+R2+R3+R4,14580,15564,4996,360,0,0.0000,0,0,0
+R3 only (diagnostic; not paper order),44109,45093,11325,360,24691,35.8881,24691,4275,0

@@ -1,0 +1,31 @@
+{
+  "R1_shortest_time": {
+    "enabled": true,
+    "arcs_before": 4440,
+    "arcs_after": 4440
+  },
+  "R2_reachability": {
+    "enabled": true,
+    "arcs_before": 4440,
+    "arcs_after": 570
+  },
+  "R3_budget_paths": {
+    "enabled": true,
+    "scope": "autonomous only",
+    "arcs_before": 487,
+    "arcs_after": 487
+  },
+  "R4_unused_cells": {
+    "enabled": true,
+    "candidate_cells_before": 720,
+    "candidate_cells_after": 332,
+    "fixed_to_zero": 388
+  },
+  "candidate_cells_before": 720,
+  "candidate_cells_after": 332,
+  "R4_fixed_to_zero": 388,
+  "time_space_arcs": 714,
+  "time_space_travel_arcs": 570,
+  "fixed_autonomous_commodities": [],
+  "preprocessing_seconds": 0.00012493133544921875
+}

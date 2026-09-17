@@ -1,0 +1,3 @@
+iteration,UB,LB,global_gap,first_stage_cost,expected_recourse_cost,cuts,elapsed_seconds,status
+1,333824.82878000004,0.0,1.0,0.0,333824.82878000004,10,2.9469592571258545,running
+1,333824.82878000004,0.0,1.0,0.0,333824.82878000004,10,2.9485456943511963,iteration_limit

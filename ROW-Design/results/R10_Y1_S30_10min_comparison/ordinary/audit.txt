@@ -1,0 +1,6 @@
+Excel: D:\Dropbox\research papers\闫老师-夜间物流论文\test\R10_Nighttime_ROW_Benchmark_Y1_Y3_Y5_S10_S20_S30.xlsx
+nodes=20, physical_arcs=120, commodities=40, periods=24
+candidates=316, scenarios S10/S20/S30=10/20/30
+travel-time audit: tau_A<tau_H=120, tau_A=tau_H=0, tau_A>tau_H=0, zero-period arcs=0.
+delta<=R_H verified for 86400 cells; nonnegative costs and scenario-probability normalization verified.
+Mapping: Physical_Arcs(tail,head)->links; Time_Periods(period)->T; autonomous/conventional_travel_periods->tau_A/tau_H; Commodities(origin,destination,release_period,deadline_period)->(o,q,r,h); ROW_candidate->C; ROW_resource_weight/ROW_activation_cost_per_period->rho/g; Capacity_Base + Capacity_Factors -> (U_A,R_H), ROW_capacity_share*base_capacity_per_period -> Delta; Demand_Scenarios(realized_demand)->d^omega; Scenario_Index probabilities -> p_omega.

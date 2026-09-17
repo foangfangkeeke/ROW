@@ -1,0 +1,15 @@
+{
+  "instance_id": "R04_Y1",
+  "scenario_set": "S10",
+  "algorithm": "plain",
+  "master_mip_gap": 0.01,
+  "time_limit_seconds": 300,
+  "master_time_limit_seconds": 300,
+  "max_benders_iterations": 500,
+  "cut_audit": false,
+  "parallel_scenarios": true,
+  "max_scenario_workers": 4,
+  "solver_threads": 1,
+  "reductions": {"R1_shortest_time": true, "R2_reachability": true, "R3_budget_paths": true, "R4_unused_cells": true},
+  "cuts": {"ordinary": true, "pareto": false, "network_relaxation": false}
+}

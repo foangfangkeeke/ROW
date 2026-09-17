@@ -1,0 +1,19 @@
+{
+  "scenario_set": "S10",
+  "algorithm": "BD-P",
+  "master_mip_gap": 1e-6,
+  "time_limit_seconds": null,
+  "max_benders_iterations": 500,
+  "cut_audit": true,
+  "parallel_scenarios": false,
+  "max_scenario_workers": 1,
+  "solver_threads": 1,
+  "nr_violation_tolerance": 1e-6,
+  "reductions": {
+    "R1_shortest_time": true,
+    "R2_reachability": true,
+    "R3_budget_paths": true,
+    "R4_unused_cells": false
+  },
+  "cuts": {"ordinary": true, "pareto": true, "network_relaxation": false}
+}

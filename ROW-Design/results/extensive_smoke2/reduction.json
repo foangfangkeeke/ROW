@@ -1,0 +1,9 @@
+{
+  "R4_enabled": true,
+  "time_space_arcs": 714,
+  "candidate_cells_before": 720,
+  "candidate_cells_after": 332,
+  "R4_fixed_to_zero": 388,
+  "fixed_autonomous_commodities": [],
+  "preprocessing_seconds": 0.0001678466796875
+}

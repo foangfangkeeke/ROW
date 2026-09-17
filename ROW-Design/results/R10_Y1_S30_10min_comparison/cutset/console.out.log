@@ -1,0 +1,67 @@
+{
+  "objective": 178478.0675309881,
+  "first_stage": 7178.45,
+  "expected_recourse": 171299.6175309881,
+  "LB": 7112.844460239025,
+  "UB": 178478.0675309881,
+  "gap": 0.960147235127341,
+  "iterations": 10,
+  "cuts": 270,
+  "ordinary_cuts": 270,
+  "pareto_cuts": 0,
+  "fallback_cuts": 0,
+  "dual_greedy_warm_start": false,
+  "root_lp_cut_rounds": 0,
+  "master_time_limit_seconds": 180,
+  "master_solver_backends": [
+    "CPLEX Python 22.2.0.0"
+  ],
+  "timing_seconds": {
+    "master": 1.4715003967285156,
+    "recourse": 633.3345489501953,
+    "pareto_auxiliary": 0.0,
+    "dual_greedy_warm_start": 0.0
+  },
+  "seconds": 707.103080034256,
+  "stopped_by_time_limit": true,
+  "parallel_scenarios": true,
+  "scenario_workers": 4,
+  "solver_threads_per_model": 1,
+  "resolved_algorithm": "cutset",
+  "recourse_solver_backends": [
+    "CPLEX Python 22.2.0.0"
+  ],
+  "ROW_resource_usage": 144.199998,
+  "mode_shares": {
+    "A": 0.17589308064471393,
+    "H": 0.739313118840736,
+    "E": 0.08479380051455154
+  },
+  "config": {
+    "instance_id": "R10_Y1_S30",
+    "scenario_set": "S30",
+    "algorithm": "cutset",
+    "master_mip_gap": 0.01,
+    "time_limit_seconds": 600,
+    "master_time_limit_seconds": 180,
+    "max_benders_iterations": 10000,
+    "cut_audit": false,
+    "parallel_scenarios": true,
+    "max_scenario_workers": 4,
+    "solver_threads": 1,
+    "dual_greedy_warm_start": false,
+    "root_lp_cut_rounds": 0,
+    "reductions": {
+      "R1_shortest_time": true,
+      "R2_reachability": true,
+      "R3_budget_paths": true,
+      "R4_unused_cells": true
+    },
+    "cuts": {
+      "ordinary": true,
+      "pareto": false,
+      "cutset": true
+    }
+  },
+  "cut_audit": "skipped"
+}

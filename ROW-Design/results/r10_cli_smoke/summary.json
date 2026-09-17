@@ -1,0 +1,48 @@
+{
+  "objective": 333824.82878000004,
+  "first_stage": 0.0,
+  "expected_recourse": 333824.82878000004,
+  "LB": 0.0,
+  "UB": 333824.82878000004,
+  "gap": 1.0,
+  "iterations": 1,
+  "cuts": 10,
+  "ordinary_cuts": 10,
+  "pareto_cuts": 0,
+  "fallback_cuts": 0,
+  "seconds": 6.357025384902954,
+  "stopped_by_time_limit": false,
+  "parallel_scenarios": true,
+  "scenario_workers": 2,
+  "solver_threads_per_model": 1,
+  "resolved_algorithm": "ordinary",
+  "ROW_resource_usage": 0.0,
+  "mode_shares": {
+    "A": 0.0,
+    "H": 0.5649368489612182,
+    "E": 0.43506315103878196
+  },
+  "config": {
+    "scenario_set": "S10",
+    "algorithm": "ordinary",
+    "master_mip_gap": 0.01,
+    "time_limit_seconds": 120,
+    "max_benders_iterations": 1,
+    "cut_audit": false,
+    "parallel_scenarios": true,
+    "max_scenario_workers": 2,
+    "solver_threads": 1,
+    "reductions": {
+      "R1_shortest_time": true,
+      "R2_reachability": true,
+      "R3_budget_paths": true,
+      "R4_unused_cells": true
+    },
+    "cuts": {
+      "ordinary": true,
+      "pareto": false,
+      "cutset": false
+    }
+  },
+  "cut_audit": "skipped"
+}

@@ -1,0 +1,18 @@
+{
+  "objective": 333824.82878000004,
+  "first_stage": 0.0,
+  "expected_recourse": 333824.82878000004,
+  "LB": 33917.66275149089,
+  "UB": 333824.82878000004,
+  "gap": 0.8983968242402857,
+  "iterations": 10,
+  "cuts": 100,
+  "ordinary_cuts": 100,
+  "pareto_cuts": 0,
+  "fallback_cuts": 0,
+  "seconds": 35.49837803840637,
+  "run_type": "performance",
+  "requested_master_mip_gap": 0.005,
+  "max_benders_iterations": 10,
+  "cut_audit": "skipped"
+}

@@ -1,0 +1,13 @@
+{
+  "scenario_set": "S10",
+  "master_mip_gap": 0.01,
+  "time_limit_seconds": 3600,
+  "master_time_limit_seconds": 10,
+  "max_benders_iterations": 500,
+  "parallel_scenarios": true,
+  "max_scenario_workers": 4,
+  "solver_threads": 1,
+  "dual_greedy_warm_start": true,
+  "root_lp_cut_rounds": 3,
+  "cuts": {"ordinary": true, "pareto": true, "cutset": true}
+}

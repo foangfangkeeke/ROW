@@ -1,0 +1,11 @@
+{
+  "iteration": 109,
+  "UB": 333824.8287808393,
+  "LB": 284300.7584198923,
+  "global_gap": 0.14835346592347162,
+  "first_stage_cost": 0.0,
+  "expected_recourse_cost": 333824.8287808393,
+  "cuts": 1080,
+  "elapsed_seconds": 3606.686445951462,
+  "status": "time_limit"
+}

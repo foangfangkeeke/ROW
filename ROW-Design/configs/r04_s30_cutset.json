@@ -1,0 +1,16 @@
+{
+  "scenario_set": "S30",
+  "algorithm": "cutset",
+  "master_mip_gap": 0.01,
+  "time_limit_seconds": 3600,
+  "master_time_limit_seconds": 300,
+  "max_benders_iterations": 500,
+  "cut_audit": true,
+  "parallel_scenarios": true,
+  "max_scenario_workers": 4,
+  "solver_threads": 1,
+  "dual_greedy_warm_start": true,
+  "root_lp_cut_rounds": 3,
+  "reductions": {"R1_shortest_time": true, "R2_reachability": true, "R3_budget_paths": true, "R4_unused_cells": true},
+  "cuts": {"ordinary": true, "pareto": false, "cutset": true}
+}

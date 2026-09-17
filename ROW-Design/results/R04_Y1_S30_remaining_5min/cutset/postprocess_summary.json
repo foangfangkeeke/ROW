@@ -1,0 +1,9 @@
+{
+  "report_source": "saved_incumbent",
+  "first_stage_cost_recomputed": 4414.0,
+  "expected_recourse_cost_recomputed": 23859.82018768752,
+  "objective_recomputed": 28273.82018768752,
+  "scenario_count": 30,
+  "parallel_scenarios": true,
+  "scenario_workers": 4
+}

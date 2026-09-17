@@ -1,0 +1,1203 @@
+Stochastic Spatiotemporal Right-of-Way Allocation
+for Nighttime Autonomous Freight Transportation
+1. Introduction
+Freight transportation is essential to the functioning of modern supply chains, yet its
+operation is increasingly constrained by limited road capacity, rising labor costs, driver
+shortages, and stringent service requirements. These challenges are particularly pronounced
+for overnight freight movements. Although nighttime operations can avoid daytime conges-
+tion and make use of otherwise underutilized transportation capacity, they rely heavily on
+drivers working irregular hours and operating under fatigue-prone conditions. Consequently,
+nighttime freight transportation presents both an important operational opportunity and a
+persistent labor and safety challenge.
+Recent advances in autonomous driving, vehicle sensing, digital infrastructure, and fleet
+coordination have created new possibilities for addressing these challenges. Compared with
+daytime urban passenger transportation, nighttime freight operations may provide a partic-
+ularly suitable early application for autonomous vehicles. Freight movements are generally
+planned in advance, controlled by professional operators, and concentrated along relatively
+stable origin–destination corridors. Nighttime traffic volumes are also typically lower, allow-
+ing autonomous trucks to operate in a less congested and less behaviorally complex envi-
+ronment. Autonomous freight operations can therefore potentially exploit unused nighttime
+road capacity, reduce dependence on overnight driving labor, lower operating costs, and limit
+workers’ exposure to fatigue-related risks. These characteristics make nighttime autonomous
+logistics a potentially important transitional application between conventional trucking and
+fully autonomous road transportation.
+The emergence of autonomous trucks, however, does not imply that autonomous freight
+services can be deployed efficiently on every road. Fully driverless vehicles may initially
+operate only within restricted operational design domains, and their performance can dete-
+riorate when they interact extensively with heterogeneous human-driven traffic. Moreover,
+a shipment can be completed without a human driver only if autonomous operating condi-
+tions are available over its entire route. An isolated autonomous segment is of limited value
+when a vehicle still requires a driver to access that segment or to complete the remainder of
+the trip. The deployment of autonomous freight therefore involves an importantend-to-end
+connectivity requirement: autonomous road access must form a temporally and spatially
+continuous path between the shipment’s origin and destination.
+One possible way to provide such operating conditions is to allocate selected road capac-
+ity temporarily to autonomous freight vehicles. In this paper, we use the termright-of-way
+(ROW) to denote a completely isolated or strictly access-controlled road lane that is reserved
+for eligible autonomous trucks during a specified time period. Unlike the construction of per-
+manent dedicated infrastructure, nighttime ROW allocation can reuse existing road capacity\n\nand can be adjusted across locations and time periods. A lane may, for example, remain
+available to general traffic during the evening peak, be designated as an autonomous freight
+ROW during low-demand nighttime hours, and return to general use before the morning
+peak.
+This operational flexibility creates a new planning problem. Transportation authorities
+or infrastructure operators must determine which road segments should be designated as
+autonomous freight ROWs and during which nighttime periods. These decisions must be
+made before the exact freight demand and available road capacity are known. Once demand
+is realized, shipments can be assigned either to the resulting autonomous ROW network or to
+conventional human-driven trucking routes. The former may reduce driver and energy costs
+but requires a complete ROW path, whereas the latter can use the general road network but
+remains subject to conventional transportation costs and congestion.
+Three interdependencies make this planning problem nontrivial. First, ROW decisions
+exhibit strong spatial and temporal complementarity. Opening one isolated link may gen-
+erate little or no operational benefit, whereas opening a sequence of compatible link–period
+combinations can create an end-to-end autonomous freight service. Second, the value of a
+ROW configuration depends on uncertain freight demand and uncertain effective road ca-
+pacity. A configuration designed for expected demand may perform poorly when the realized
+spatial distribution of freight differs from its forecast. Third, ROW allocation involves an
+opportunity cost when a reserved lane is converted from capacity previously available to gen-
+eral traffic. Expanding the autonomous freight network may reduce autonomous operating
+costs while simultaneously limiting the capacity available to conventional trucks.
+These observations motivate the following research questions:
+1. Where and when should temporary autonomous freight ROWs be activated under
+limited deployment resources?
+2. How should uncertain freight demand be allocated between end-to-end autonomous
+transportation and conventional trucking after uncertainty is realized?
+3. How do demand uncertainty, background traffic, ROW resource availability, and the
+cost advantages of autonomous transportation affect the structure and value of the
+resulting ROW network?
+To address these questions, we formulate a two-stage stochastic network design model.
+In the first stage, a planner selects the road-segment and time-period combinations to be
+operated as autonomous freight ROWs, subject to an aggregate ROW deployment resource
+constraint. In the second stage, after freight demand and effective road capacities are real-
+ized, a centralized dispatcher determines the routing and mode of each divisible freight flow.
+Freight assigned to autonomous transportation must follow a complete origin-to-destination
+path composed exclusively of activated ROW arcs. The remaining freight is explicitly routed
+through the general road network using conventional trucks. An emergency outsourcing or
+postponement option guarantees feasibility in extreme scenarios and represents the high cost
+of failing to serve freight through the planned network.
+The model is constructed on a two-layer time-expanded network. The autonomous layer
+represents movements that are feasible only when the corresponding ROW remains active
+2\n\nthroughout each link traversal, whereas the conventional layer represents movements through
+the general road network. This representation simultaneously captures vehicle movement
+over space, origin-dispatch timing, delivery deadlines, and end-to-end autonomous-route
+continuity. Freight in either layer may wait at its origin logistics terminal before dispatch,
+but neither autonomous nor conventional trucks may wait at intermediate road nodes. The
+construction also avoids explicitly enumerating the potentially enormous set of space–time
+paths.
+Our work is related to three streams of literature. The first studies deterministic and
+stochastic network design with multicommodity flows (????). The second considers trans-
+portation network design with end-to-end service requirements (??). The third investigates
+dedicated infrastructure and operating strategies for autonomous vehicles and autonomous
+truck fleets (??). Despite their relevance, these streams do not jointly address the temporary
+allocation of road space across both locations and time periods, uncertain freight demand and
+effective capacity, end-to-end autonomous-route requirements, and explicit recourse routing
+through both autonomous and conventional transportation networks. The present study
+connects these elements in a unified stochastic optimization framework.
+This paper makes four main contributions. First, we introduce a stochastic spatiotem-
+poral ROW design problem for nighttime autonomous freight transportation. In contrast
+to permanent lane construction models, the proposed framework treats road access as a
+time-dependent and reversible operational resource. It also explicitly captures the require-
+ment that driverless freight must have a complete ROW connection from its origin to its
+destination.
+Second, we develop an integrated two-stage stochastic optimization model that jointly
+considers infrastructure access decisions, freight-mode assignment, and conventional and
+autonomous freight routing. The model captures both the operating-cost advantage of au-
+tonomous transportation and, when ROWs are converted from existing lanes, the associated
+capacity opportunity cost imposed on conventional freight. Because aggregate freight flows
+are modeled as continuous, the second-stage problem is a linear multicommodity flow prob-
+lem that can be solved exactly and decomposed by demand scenario.
+Third, we establish structural properties of the recourse problem and exploit them in an
+exact decomposition algorithm. In particular, the second-stage value function is finite, con-
+vex, continuous, and piecewise linear over the relaxed first-stage domain. These properties
+enable a parallel multi-cut Benders decomposition method. We further reduce computa-
+tional burden through shortest-time window screening, exact forward–backward reachabil-
+ity, budget-aware autonomous-path pruning, and unused ROW-candidate elimination. The
+resulting procedures exploit both temporal feasibility and the first-stage deployment budget
+while preserving global optimality.
+Fourth, the model provides a framework for identifying when nighttime autonomous
+ROW deployment creates meaningful system value. The computational study is designed
+to examine how optimal ROW configurations change with the magnitude and spatial con-
+centration of freight demand, the degree of demand and capacity uncertainty, background
+nighttime traffic, autonomous operating-cost savings, conventional-road capacity losses, and
+the available ROW deployment budget. It also quantifies the value of stochastic planning and
+identifies conditions under which locally attractive ROW segments fail to generate system-
+level benefits because they do not form an end-to-end autonomous corridor.
+3\n\nThe remainder of this paper is organized as follows. Section 2 reviews the relevant lit-
+erature. Section 3 describes the nighttime autonomous freight ROW planning problem.
+Section 4 presents the two-stage stochastic optimization formulation and its structural prop-
+erties. Section 5 develops the decomposition algorithm and network-reduction procedures.
+Section??reports the computational design and performance measures.
+2. Literature Review
+This study lies at the intersection of autonomous-freight infrastructure planning, stochas-
+tic service network design, and network design with end-to-end service requirements. We
+review these three streams of literature and then position the present study with respect to
+their modeling and algorithmic foundations.
+2.1. Autonomous Freight Transportation and Dedicated Road Infrastructure
+Autonomous driving technologies have attracted growing interest in freight transporta-
+tion because long-haul trucking is characterized by high labor costs, driver shortages, hours-
+of-service restrictions, and relatively repetitive operating environments. Cost analyses sug-
+gest that removing or reducing the dependence on onboard drivers can alter both the operat-
+ingcostandutilizationpatternofheavytrucks(?). Unlikehuman-driventrucks, autonomous
+trucks may also operate for longer periods without being directly constrained by driver rest
+requirements. These potential advantages are particularly relevant to nighttime operations,
+during which road capacity is often less intensively used but conventional carriers must rely
+on drivers working undesirable and fatigue-prone shifts.
+The realization of these benefits, however, depends on where autonomous trucks are per-
+mitted and technically capable of operating. During the transition toward full automation,
+autonomous vehicles are likely to coexist with human-driven vehicles and may be restricted
+to specific operational design domains. This has motivated research on autonomous-vehicle
+zones, dedicated lanes, and other forms of segregated infrastructure.
+A seminal network-level study is?, who investigate the optimal design of autonomous-
+vehicle zones in a transportation network. Their model captures the interaction between
+infrastructure deployment and routing behavior through a mixed-routing equilibrium. This
+workdemonstratesthatautonomous-vehicleinfrastructureshouldbe designedatthenetwork
+level because the performance of one designated segment depends on how it connects to
+the remainder of the network. Related studies of connected and autonomous vehicle lane
+management examine how dedicated lanes affect road capacity, traffic performance, safety,
+and the distribution of autonomous and human-driven vehicles across lanes.
+Most of this literature is motivated by passenger transportation and focuses on traffic
+equilibrium, autonomous-vehicle penetration, or the capacity effects of lane segregation.
+Infrastructure decisions are generally modeled as static or long-term decisions. As a result,
+the temporal flexibility of road space—for example, retaining a lane for general traffic during
+peak periods and reserving it for autonomous freight during selected nighttime periods—has
+received limited attention.
+More recently,?study dedicated-lane planning for autonomous truck fleets under hours-
+of-service regulations. Their work is particularly relevant because it links autonomous-truck
+infrastructure with freight operations and explicitly recognizes the labor-related value of
+4\n\nautonomous trucking. Nevertheless, their focus differs from ours in several respects. In
+particular, the present study treats ROW allocation as a temporary link–period decision, in-
+corporatesuncertain freightdemandand effective road capacity, andallows realized freightto
+be routed through either an end-to-end autonomous network or a conventional road network.
+The distinction between a dedicated lane and the ROW considered in this paper is im-
+portant. We do not assume that a permanent autonomous-truck lane must be constructed.
+Instead, an existing lane or controlled road facility can be temporarily designated as a com-
+pletelyisolatedorstrictlyaccess-controlledautonomousfreightROW.Theresultingplanning
+problem is therefore not only where autonomous infrastructure should be provided, but also
+when each candidate road segment should be made available to autonomous freight.
+2.2. Stochastic and Time-Dependent Service Network Design
+Thesecondrelevantliteraturestreamisfixed-chargeandservicenetworkdesign. Classical
+network design models jointly determine which arcs or transportation services to activate
+and how multicommodity flows should be routed through the activated network (?). These
+models have been extensively applied to freight transportation, telecommunications, and
+supply chain planning.
+Because freight demand is rarely known with certainty at the time that network decisions
+are made, stochastic service network design has received substantial attention.?investigate
+how demand stochasticity changes the structure of freight service networks and show that
+stochastic solutions can create operational flexibility through consolidation and shared ca-
+pacity.?study time-dependent scheduled transportation networks and examine the value
+and limitations of deterministic designs under uncertain demand. Their results highlight that
+the quality of a network configuration depends not only on its performance under average
+demand but also on its ability to accommodate different realized flow patterns.
+Subsequent studies have developed more general formulations and scalable algorithms for
+stochastic network design.?consider a two-stage stochastic multicommodity network design
+problem in which both commodity demands and arc capacities are uncertain. They develop a
+partial Benders decomposition method that retains selected second-stage information in the
+master problem. More recently,?propose a stochastic Benders decomposition scheme that
+uses scenario sampling and dual averaging to solve large-scale stochastic network design
+problems.?study stochastic service network design with uncertain demand and crowd-
+sourced capacity, demonstrating the relevance of stochastic planning in a hybrid-capacity
+transportation system.
+Our model shares the two-stage design-and-flow structure of this literature, but the in-
+terpretation and coupling of the decisions are different. The first-stage variables do not
+construct permanent arcs or schedule conventional transportation services. They allocate a
+limited road-use resource across physical links and time periods. A ROW decision simul-
+taneously creates capacity in the autonomous layer and, when the ROW is converted from
+an existing lane, may reduce capacity in the conventional layer. Thus, the same first-stage
+decision can produce both a capacity benefit and a capacity opportunity cost.
+The second-stage structure also differs from conventional service network design. After
+demand and effective capacity are realized, each freight flow can be served using one of two
+operationally distinct networks. Autonomous freight can use only activated ROW arcs and
+must have a continuous origin-to-destination ROW path. Freight that cannot be served
+5\n\nin this way remains eligible for conventional trucking and is explicitly routed through the
+general road network. The recourse problem therefore integrates mode assignment and
+routing instead of treating nonautonomous freight as an exogenous residual demand.
+Time-expandednetworksprovideanaturalrepresentationofsuchdecisionsbecauseROW
+availability, vehicle movements, origin-dispatch choices, shipment release times, and delivery
+deadlines all depend on time. However, full time discretization can generate extremely large
+networks.?develop a partially time-expanded network and iterative refinement method for
+continuous-time service network design. Building on this idea,?propose an interval-based
+dynamicdiscretizationdiscoverymethodthatconstructsonlyasmallfractionofthecomplete
+time-expanded network. These studies motivate the use of exact reachability and temporal
+pruning procedures in our model. In our setting, nodes and arcs that cannot belong to any
+feasible release-to-deadline path can be removed before optimization without changing the
+optimal solution.
+2.3. Network Design with End-to-End Service Requirements
+The third literature stream concerns network design with end-to-end service require-
+ments. Standard network design formulations typically enforce flow conservation and arc
+capacities but do not necessarily guarantee that every selected path satisfies a path-level
+service condition. In many applications, however, service feasibility depends on cumulative
+or path-specific characteristics such as total transit time, latency, reliability, or the number
+of transfers.
+?formulateamulticommoditynetworkdesignprobleminwhicheachorigin-to-destination
+route must satisfy end-to-end service requirements. They develop strong valid inequalities
+and polyhedral methods for the resulting formulation.?subsequently develop a path-based
+formulation and a branch-and-cut-and-price framework to solve larger instances with path-
+level service restrictions.
+The end-to-end requirement in the present study has a different operational meaning. It
+does not simply impose a maximum travel time or another quality-of-service threshold on a
+freight path. Instead, it determines whether the shipment can be operated without a human
+driver. A freight movement is classified as autonomous only if every physical link along its
+origin-to-destination trajectory is covered by an active ROW throughout the correspond-
+ing traversal. Opening an isolated ROW segment may therefore produce no autonomous
+transportation benefit if the remaining segments of the trip require conventional driving.
+This feature creates strong complementarity among ROW decisions. Consider a shipment
+whose only feasible autonomous route consists of two consecutive road segments. Activating
+either segment alone does not create an autonomous route, whereas activating both segments
+allows the entire shipment to be transported autonomously. Therefore, the value of a ROW
+segment cannot generally be evaluated independently, and the benefit generated by a set of
+ROW decisions is not generally submodular. This distinguishes the problem from network
+design settings in which individual capacity additions yield separable or diminishing returns.
+The explicit conventional-trucking alternative is also important. A shipment that lacks
+an end-to-end ROW path is not necessarily rejected. It can be reassigned to a human-driven
+truck and routed through the general road network. The planner must therefore evaluate
+whether the savings obtained by creating an autonomous corridor justify both the required
+ROW resources and any conventional-road capacity that is displaced.
+6\n\n2.4. Decomposition Methods and Positioning of This Study
+Benders decomposition is widely used for capacitated and stochastic network design be-
+cause fixing the binary design decisions typically leaves a linear multicommodity flow prob-
+lem. Classical acceleration strategies include generating Pareto-optimal cuts (?), retaining
+selected flow information in the master problem (?), and adaptively aggregating and disag-
+gregating scenarios (?). Large stochastic problems can also benefit from scenario sampling,
+parallel subproblem solution, and dual averaging (?).
+Our continuous-flow formulation preserves this favorable decomposition structure. Con-
+ditional on a first-stage ROW schedule, each scenario produces a linear two-layer multicom-
+modity flow problem. Its dual variables quantify the marginal value of autonomous ROW
+capacity and the marginal cost of capacity removed from the conventional road network.
+These dual quantities lead directly to scenario-specific Benders optimality cuts.
+The algorithmic contribution of this paper does not lie in proposing a completely new
+decomposition paradigm. Instead, we exploit the particular structure of the nighttime ROW
+problem through a tailored exact implementation. This implementation combines paral-
+lel multi-cut Benders decomposition with shortest-time window screening, exact forward–
+backward reachability, budget-aware autonomous-path pruning, and unused ROW-candidate
+elimination. These procedures reduce both the master problem and the scenario subproblems
+while preserving global optimality.
+In summary, the existing autonomous-vehicle infrastructure literature explains the traffic
+and routing implications of segregated facilities but primarily considers static designs and
+passenger traffic. The stochastic service network design literature provides a rigorous frame-
+work for design decisions under uncertain demand and capacity but does not distinguish
+between end-to-end autonomous transportation and conventional freight recourse. The end-
+to-end network design literature captures path-level service feasibility but does not consider
+temporary road access, stochastic freight recourse, or capacity transfers between autonomous
+and conventional transportation.
+The present study connects these streams by jointly considering (i) temporary link–
+period ROW allocation, (ii) uncertain freight demand and effective road capacity, (iii) end-
+to-end eligibility for driverless transportation, (iv) explicit routing of both autonomous and
+conventional freight, and (v) the opportunity cost of reallocating road capacity. To the best
+of our knowledge, these features have not been integrated within a single stochastic network
+design framework.
+3. Problem Description
+3.1. Operating setting
+Consider a road authority that can reserve selected road capacity for autonomous freight
+vehicles during the night. We use ROW to mean a completely separated or strictly access-
+controlled lane that can be used by autonomous trucks but not by passenger cars or conven-
+tional trucks while the designation is in effect. The designation is temporary. A lane may
+remain in general use during the evening peak, operate as an autonomous-freight ROW for
+several nighttime periods, and return to general use before the morning peak.
+The authority does not know the exact freight demand or effective road capacity when
+it announces the ROW schedule. Demand varies from night to night, and capacity can be
+7\n\nStage I
+Select link–period ROWsy
+Uncertainty is revealed
+dω,U A,ω,RH,ω
+Stage II
+Assign and route freight
+Scenario costQω(y)
+and realized freight plan
+Figure 1: Decision sequence for nighttime ROW planning.
+reduced by background traffic, maintenance, incidents, or weather. A ROW schedule must
+therefore be chosen before these quantities are observed. Once the uncertainty is resolved,
+a dispatcher assigns freight to the network. Freight may be transported autonomously if a
+complete ROW connection is available from its origin to its destination within its delivery
+window. Otherwise, it can be carried by a conventional truck on the general road network.
+Conventional transportation remains available even when an autonomous path does not
+exist.
+This decision sequence gives rise to two distinct planning stages. In the first stage, the
+authority chooses the link–period combinations that will operate as ROWs, subject to a
+deployment resource limit. In the second stage, freight demand and usable capacities are
+observed, after which the dispatcher determines the autonomous and conventional freight
+flows. Figure 1 summarizes the sequence.
+Two features distinguish this setting from a standard lane-opening problem. First, au-
+tonomous service is an end-to-end product. Opening a short isolated segment may save travel
+time on that segment, but it does not remove the driver if the same shipment still requires
+conventional driving before or after the segment. Second, ROW allocation may transfer road
+capacity between two freight technologies. An activated ROW creates protected capacity for
+autonomous trucks. If the ROW is converted from an existing general-purpose lane, it also
+removes capacity from conventional traffic. Hence, opening more ROWs is not automatically
+better.
+The planner minimizes the sum of ROW deployment cost and expected freight operating
+cost. Autonomous operating costs incorporate the savings associated with reduced onboard
+labor and, when appropriate, more stable driving conditions and lower energy use. We do
+not model vehicle platoons explicitly. Their average operational effect can be represented
+through autonomous arc costs and capacities approximately without introducing truck-level
+synchronization variables.
+3.2. Modeling assumptions
+The formulation is developed under the following assumptions.
+Assumption 1.Freight movements are centrally coordinated and represented as divisible
+aggregate flows.
+Assumption 2.A shipment may be held at its origin logistics terminal before dispatch.
+After dispatch, it travels continuously to its destination without waiting at intermediate road
+nodes. An autonomous shipment must remain in the autonomous layer and use active ROWs
+throughout every link traversal.
+8\n\nAssumption 3.Nighttime passenger traffic is exogenous, and its effect on freight transporta-
+tion is represented by the scenario-dependent residual capacities of general-purpose roads.
+Assumption 4.Freight that cannot be accommodated by either transportation mode may be
+assigned to an emergency service at a sufficiently high unit cost.
+Assumption 1 is consistent with the tactical nature of the planning problem. Nighttime
+freight operations are typically coordinated by a logistics operator or a digital freight plat-
+form, and the demand associated with an origin–destination pair represents a collection of
+shipments rather than an individual vehicle. Freight quantities can therefore be measured
+in truckloads or equivalent continuous units. Assumption 2 distinguishes terminal holding
+from en-route waiting. Both autonomous and conventional freight may choose a later dis-
+patch time at the origin logistics terminal, but a dispatched truck cannot stop at an ordinary
+road intersection for one or more model periods. Signal delay and ordinary traffic delay are
+incorporated in the layer-specific link travel times rather than represented by discretionary
+waiting arcs. The same assumption also captures the end-to-end nature of autonomous
+freight service. A shipment is regarded as autonomous only when every road segment used
+along its trajectory is covered by an active ROW throughout the time required to traverse
+that segment. An isolated ROW segment does not eliminate the need for a human driver
+if conventional driving is still required elsewhere along the trip. Consequently, a shipment
+without a temporally continuous ROW path must be transported conventionally or assigned
+to the emergency option. Assumption 3 reflects the focus on nighttime operations, during
+which passenger volumes are generally lower than those observed in daytime peak periods.
+Ratherthanmodelingpassengerroutechoicesendogenously, theireffects, togetherwithother
+sources of capacity variation, are incorporated into the scenario-dependent residual road ca-
+pacities. This treatment preserves the freight-planning focus of the model while allowing the
+consequences of uncertain background traffic to be examined. Finally, Assumption 4 guar-
+antees relatively complete recourse for every first-stage ROW schedule and every realized
+scenario. The emergency cost is set above the cost of regular autonomous and conventional
+transportation so that this option is used only when the planned road system cannot accom-
+modate all realized demand. Its use therefore provides an explicit measure of freight service
+failure rather than merely serving as a mathematical feasibility device.
+3.3. Construction of the Two-Layer Time-Expanded Network
+To describe freight movements and time-dependent ROW availability in one representa-
+tion, we construct a two-layer time-expanded network. The physical road network is denoted
+byG= (N,L), whereNis the node set andLis the set of directed road links. The nighttime
+horizon is discretized into timestampsT={0,1,...,H}. The duration of a period can be
+selected according to the application, for example, 10 or 15 minutes.
+The two transportation technologies are indexed byM={A,H}, whereAdenotes au-
+tonomous transportation on ROWs andHdenotes conventional human-driven transporta-
+tion on general-purpose roads. For each physical nodei∈N, timestampt∈T, and layer
+m∈M, we create a time-space nodevm
+it. It represents a shipment located at nodeiat time
+tand assigned to technologym.
+Travel times are technology dependent. LetτA
+ℓ andτ H
+ℓ denote the number of periods
+required to traverse linkℓin the autonomous and conventional layers, respectively. Because
+9\n\nan autonomous truck travels on a separated facility with fewer interactions and more stable
+operating conditions, we assume
+τA
+ℓ <τ H
+ℓ , ℓ∈L A,(1)
+whereL A⊆Lis the set of links that can potentially be operated as ROWs. Travel times
+are fixed within each layer, whereas demand, usable capacity, and operating cost may vary
+by scenario.
+The two layers share the same basic dispatch–travel–delivery structure. They differ in
+their travel times, costs, capacities, and ROW requirements.
+•Travel arcs.For physical linkℓ= (i,j)and departure timestampt, a travel arc
+e=
+(︂
+vm
+it,vm
+j,t+τ m
+ℓ
+)︂
+(2)
+is created whenevert+τ m
+ℓ ≤H. Its flow represents freight entering linkℓat timet
+and reaching nodejat timet+τ m
+ℓ . LetE m,T be the set of travel arcs in layerm. For
+an autonomous traversal that enters linkℓat timet, define its set of occupied periods
+as
+IA
+ℓt ={t,t+ 1,...,t+τ A
+ℓ −1}.(3)
+An autonomous travel arc is generated only ifℓ∈LA and every cell(ℓ,s)withs∈I A
+ℓt
+belongs to the candidate setC. Its availability is then controlled by all of those ROW
+decisions, not only by the decision in its entry period.
+•No en-route waiting arcs.Ordinary physical nodes represent road intersections
+rather than terminals, parking areas, or service facilities. We therefore impose
+Em,W
+k =∅, k∈K, m∈M.(4)
+Thus, neither an autonomous truck nor a conventional truck can pause at an intermedi-
+ate node. Ordinary intersection delay, congestion delay, and signal delay are embedded
+inτ m
+ℓ and the associated travel-arc cost.
+•Origin-dispatch arcs.For each commoditykand layerm, introduce a virtual origin
+terminalσ m
+k . LetD m(ok,qk)be the shortest physical travel time fromok toq k in layer
+m, using ROW-capable links whenm=A. The dispatch-arc set is
+Em,R
+k =
+{︁
+(σm
+k ,vm
+okt) :r k≤t≤h k−D m(ok,qk)
+}︁
+, m∈M.(5)
+Flow on these arcs allows freight to remain at the origin logistics terminal and to be
+dispatched at feasible times; divisible demand may be split across several dispatch
+times. If no physical path exists in layerm,Dm(ok,qk) = +∞and the corresponding
+dispatch set is empty. This is terminal holding rather than waiting inside the road
+network. If dispatch must occur exactly at release, the set in (5) can be restricted to
+t=r k.
+10\n\n•Delivery arcs.LetKbe the set of freight commodities. Commodityk∈Kis de-
+scribed by originok, destinationqk, release timerk, and deadlinehk. Every commodity
+can be transported autonomously or conventionally. For each layer, we introduce a
+dummy sinkd m
+k and connect each destination copyvm
+qkt,t≤h k, to that sink. These
+delivery arcs, collected inEm,D
+k , allow different arrival times while retaining one sink
+in the flow-balance constraints.
+The source isσm
+k in each layer. The complete arc set is
+Em
+k =E m,R
+k ∪E m,T
+k ∪E m,D
+k , m∈M,(6)
+withG m
+k = (Vm
+k ,E m
+k ). Only arcs that can lie on at least one temporally feasible path for
+commoditykare retained. For nodev∈V m
+k ,δ +
+km(v)andδ −
+km(v)denote its outgoing and
+incoming arc sets.
+For aphysical link–period pair(ℓ,t), letEm,T
+k,ℓt ⊆E m,T
+k containthe travel arcsof commodity
+kthat enter linkℓat timetin layerm, and define the aggregate autonomous entry flow
+FA,ω
+ℓt =
+∑︂
+k∈K
+∑︂
+e∈E A,T
+k,ℓt
+fA,ω
+ke .(7)
+Road capacity is measured as the number of trucks that may enter a link during a period.
+The entry flow is therefore indexed by(ℓ,t), while the ROW decisions that authorize that
+entry must remain active in every period inIA
+ℓt. This distinction represents both technology-
+dependent travel time and continuous ROW protection during a multi-period traversal.
+This formulation uses an admission-capacity abstraction. Candidate ROW intervals are
+assumed to include the required operational clearance, with transition losses already reflected
+inC,R H,ω
+ℓt , and∆ℓt. Accordingly, constraint (16) governs conventional entries after clearance;
+individual vehicle occupancy during lane transitions lies outside the tactical model.
+Figure2illustratestheconstructionforonephysicallink. Inthisexample, anautonomous
+truck leaving nodeiat timetreaches nodejatt+1, whereas a conventional truck departing
+at the same time reaches it att+ 2. Dispatch in either layer can be postponed at its
+virtual origin terminal, but neither road layer contains intermediate waiting arcs. The two
+transportation layers are deliberately not connected by transfer arcs.
+In either layer, a positive flow starts atσm
+k , enters the road network through a dispatch
+arc, and then follows consecutive travel arcs without an intermediate time gap until it reaches
+dm
+k . The absence of transfer arcs implements the modal part of the end-to-end requirement.
+In addition, an autonomous travel arc associated with entry pair(ℓ,t)can carry freight only
+ify ℓs = 1for everys∈I A
+ℓt. A collection of isolated ROW cells therefore has no autonomous
+value unless it supports a temporally continuous and fully protected source-to-sink path.
+Freight for which no such path is available remains fully serviceable through layerH.
+The network topology is kept fixed across stochastic scenarios. Scenario realizations
+change freight demand, usable ROW capacity, residual general-road capacity, and possibly
+arc cost, but they do not create or remove nodes and arcs. This provides scenario subprob-
+lems with a common algebraic structure and is convenient for decomposition. For compu-
+tational purposes, only nodes and arcs lying on at least one feasible source-to-sink path are
+retained for each commodity and layer; Section 5.2 develops this reduction formally.
+11\n\nLayerA
+σA
+k i,t
+j,t+ 1
+dispatch
+τ A
+ℓ = 1
+LayerH
+σH
+k i,t
+j,t+ 2
+dispatch
+τ Hℓ = 2
+Figure 2: Origin dispatch and technology-dependent travel arcs in the two layers.
+3.4. Notation
+Table 1 lists the notation used in the formulation. All freight-flow and demand quantities
+are expressed in the same unit.
+For a nodev∈V m
+k , letδ +
+km(v)andδ −
+km(v)denote its outgoing and incoming arcs. In
+either layer, the source represented bybm
+kv = 1is the virtual origin terminalσ m
+k , and the
+dummy sinkdm
+k has coefficient−1.
+4. Mathematical Formulation
+4.1. First-stage ROW decisions
+The binary variabley ℓt indicates whether linkℓis reserved for autonomous freight in
+periodt. The feasible set is
+Y=
+{︃
+y:
+∑︂
+(ℓ,t)∈C
+ρℓtyℓt≤B,(8)
+yℓt∈{0,1},(ℓ,t)∈C
+}︃
+.(9)
+Constraint (8) is the only policy-side resource restriction in the base model. It can represent
+the number of lane-hours that can be controlled, the availability of temporary barriers and
+monitoring equipment, or a monetary deployment budget. We deliberately do not impose
+switching limits, corridor constraints, or minimum opening durations. Such restrictions
+can be introduced for a specific implementation, but they are not intrinsic to the planning
+question studied here. We assumeρℓt >0andg ℓt≥0for every candidate cell.
+LetQ ω(y)denote the minimum freight operating cost in scenarioωunder ROW schedule
+y. The two-stage stochastic program is
+min
+y∈Y
+⎧
+⎨
+⎩
+∑︂
+(ℓ,t)∈C
+gℓtyℓt +
+∑︂
+ω∈Ω
+pωQω(y)
+⎫
+⎬
+⎭.(10)
+If all deployment burden is already represented byB, one may setgℓt = 0. The resource
+constraint remains necessary because autonomous transportation is cheaper on some arcs
+and otherwise every technically useful ROW could be opened at no planning cost.
+12\n\n4.2. Scenario recourse problem
+For fixedy∈Yand scenarioω, the recourse problem is
+Qω(y) = min
+∑︂
+k∈K
+∑︂
+m∈M
+∑︂
+e∈E m
+k
+cm,ω
+e fm,ω
+ke +
+∑︂
+k∈K
+Mksω
+k (11)
+s.t.z A,ω
+k +z H,ω
+k +sω
+k =d ω
+k, k∈K,(12)
+zA,ω
+k ≤d ω
+k, k∈K,(13)∑︂
+e∈δ+
+km(v)
+fm,ω
+ke −
+∑︂
+e∈δ−
+km(v)
+fm,ω
+ke =b m
+kvzm,ω
+k , k∈K, m∈M,
+v∈V m
+k , (14)
+FA,ω
+ℓt ≤U A,ω
+ℓt yℓs, (ℓ,t)∈C,
+s∈IA
+ℓt, (15)
+∑︂
+k∈K
+∑︂
+e∈E H,T
+k,ℓt
+fH,ω
+ke ≤R H,ω
+ℓt −∆ℓtyℓt,(ℓ,t)∈C,(16)
+∑︂
+k∈K
+∑︂
+e∈E H,T
+k,ℓt
+fH,ω
+ke ≤R H,ω
+ℓt ,(ℓ,t)/∈C,(17)
+fm,ω
+ke ≥0, z m,ω
+k ≥0, s ω
+k≥0, k∈K, m∈M, e∈E m
+k .(18)
+Constraint (12) assigns every realized unit of demand to autonomous transportation,
+conventional transportation, or the emergency option. Constraint (13) states explicitly the
+demand bound that is already implied by (12) and nonnegativity; it is retained because
+it is useful in the cut-set discussion below. No commodity-specific autonomous-eligibility
+restriction is imposed: every commodity may use layerAif the ROW schedule provides a
+feasible end-to-end path and sufficient capacity. Constraint (14) preserves each assigned flow
+from its source to its destination before the deadline.
+Constraint (15) couples the two stages and provides traversal protection. A flow entering
+linkℓat timetis bounded once for every occupied periods∈I A
+ℓt. Hence, positive entry
+flow requiresy ℓs = 1throughout the complete traversal. For example, ifτ A
+ℓ = 3, a batch
+entering attis simultaneously subject to the decisions in periodst,t+1, andt+2. Checking
+onlyy ℓt would incorrectly allow the ROW to close while the truck remains on the link. A
+minimum-duration constraint by itself would not eliminate that possibility because a truck
+could enter during the final period of an otherwise valid opening episode.
+Together with the absence of transfer and en-route waiting arcs, traversal protection
+implies that a positivezA,ω
+k must be supported by a complete, temporally continuous, and
+protected time-space path. Its timestamps evolve according toτA
+ℓ , so the travel-time ad-
+vantage of autonomous operation is represented directly in the feasible paths rather than
+through an exogenous discount applied after routing.
+Constraints (16) and (17) route conventional freight explicitly. ParameterRH,ω
+ℓt is the
+capacity remaining after exogenous passenger traffic. Parameter∆ℓt distinguishes two phys-
+ical interpretations of a ROW. If an existing general lane is converted, then∆ℓt >0captures
+the resulting opportunity cost. If the ROW uses an independent facility or capacity that
+would not otherwise serve general traffic, then∆ℓt = 0. We assume0≤∆ ℓt≤R H,ω
+ℓt for
+every candidate and scenario, so that activating a ROW never creates a negative residual
+capacity.
+13\n\nThe objective (11) minimizes scenario operating cost. For a pair of travel arcs associated
+with the same physical linkℓ, their unit costs can, for example, be calibrated as
+cH,ω
+e =a H,ω
+ℓt +β HτH
+ℓ ,(19)
+cA,ω
+e′ =a A,ω
+ℓt +β AτA
+ℓ +χA,ω
+ℓt .(20)
+Here,a m,ω
+ℓt collects distance-related vehicle and energy costs,βm is the value of in-transit
+vehicle time, andχA,ω
+ℓt represents autonomous monitoring or technology cost. Onboard driver
+cost is included inβH but not inβA. Energy savings may be reflected byaA,ω
+ℓt <a H,ω
+ℓt . Hence,
+autonomous transportation can benefit simultaneously from a shorter physical travel time,
+lower labor cost, and lower energy cost. Equations (19)–(20) are calibration relationships
+rather than additional optimization constraints.
+4.3. Model properties
+The following two propositions establish the properties needed for the model interpreta-
+tion and the decomposition method. Let
+Y=
+⎧
+⎨
+⎩y∈[0,1] |C| :
+∑︂
+(ℓ,t)∈C
+ρℓtyℓt≤B
+⎫
+⎬
+⎭ (21)
+denote the continuous relaxation of the first-stage feasible set.
+Proposition 1(Recoursestructure).For everyy∈ Yandω∈Ω, the recourse problem(11)–
+(18)is feasible and bounded. If all costs are nonnegative, then
+0≤Q ω(y)≤
+∑︂
+k∈K
+Mkdω
+k.(22)
+Moreover,Q ω(y)is finite, continuous, convex, and piecewise linear onY.
+Proof.For anyy∈ Y, set all autonomous and conventional flows to zero, letzA,ω
+k =z H,ω
+k = 0,
+and sets ω
+k =d ω
+k for every commodity. This solution is feasible and has cost∑︁
+kMkdω
+k;
+nonnegative costs give the lower bound. The recourse problem is therefore a feasible and
+bounded linear program whose right-hand side is affine iny. Its dual feasible region is
+independent ofy, so its optimal value is a polyhedral convex function ofyand is finite and
+continuous onY.
+The emergency option guarantees relatively complete recourse and eliminates the need
+for Benders feasibility cuts. Operationally, its realized value also records demand that the
+planned road system cannot serve through regular autonomous or conventional transporta-
+tion.
+Proposition 2(Path decomposition and protected autonomous paths).For anyy∈ Y,
+every feasible layer flow admits a source-to-sink path decomposition with no intermediate
+waiting or modal transfer. Each positive-flow path may select its departure time through
+an origin-dispatch arc and respects the release time and deadline of commodityk. If, in
+addition,y∈Yis binary, every positive-flow autonomous path traverses each physical link
+only when all ROW cells covering that traversal are active. Such an autonomous path is
+therefore protected end to end.
+14\n\nProof.Each virtual origin terminal has only dispatch arcs into its corresponding layer, every
+travel arc advances time, and every delivery arc enters a dummy sink. Hence, each layer
+network is acyclic, and standard flow decomposition expresses a feasible source-to-sink flow
+as a nonnegative combination ofσm
+k –dm
+k paths. Equation (4) excludes waiting at physical
+nodes; after a travel arc arrives at an intermediate node, any continuation must depart at
+the same timestamp. There are no transfer arcs, so an autonomous path cannot enter layer
+H. These conclusions hold for everyy∈ Y. Ify∈Yis binary and an autonomous path
+carries positive flow on the travel arc entering(ℓ,t), constraint (15) requiresyℓs = 1for every
+s∈I A
+ℓt. The dispatch-arc range enforces the release time, and the delivery arcs enforce the
+deadline.
+Thispropositionexplainswhynoroute-levelbinaryvariableorexplicitcorridorconstraint
+is required. Modal consistency, continuous movement after dispatch, and full traversal pro-
+tection follow from the layer construction, flow conservation, and (15).
+Remark1 (Capacity transfer and monotonicity).If∆ ℓt = 0for all(ℓ,t)∈C, thenQ ω(y)
+is componentwise nonincreasing iny. If some∆ ℓt >0, this monotonicity need not hold.
+When∆ = 0, changing a component ofyfrom zero to one relaxes an autonomous-capacity
+constraint and leaves every other constraint unchanged. The optimal value of a minimization
+problem cannot increase. When∆>0, the same change relaxes autonomous capacity but
+tightens conventional capacity, so either effect can dominate.
+Remark2 (Serial complementarity).The system benefit of ROW activation is not submod-
+ular in general. Consider one unit of demand whose only feasible autonomous path contains
+two serial link–periodsaandb. Let autonomous service saveh>0relative to conventional
+service. Activating onlyaor onlybcreates no complete autonomous path, so each decision
+alone has zero benefit. Activating both yields benefith. The marginal benefit of addingbis
+therefore zero when no ROW is active andhwhenais already active, violating diminishing
+returns. This complementarity explains why link-by-link ranking rules are unreliable: a lo-
+cally attractive ROW may have no value until surrounding link–period decisions complete a
+feasible corridor.
+5. Solution Approach
+5.1. Decomposition structure
+The model has a useful decomposition structure. The first stage contains only the bi-
+nary ROW decisionsy, whereas fixingyleaves one continuous linear recourse problem for
+each scenario. Moreover, the scenario problems are mutually independent. The emergency
+transportation option makes the recourse problem feasible for everyy∈Yand everyω∈Ω.
+Hence, the model has relatively complete recourse and only Benders optimality cuts are
+required.
+We exploit this structure through a parallel multi-cut Benders method. Each iteration
+solves a master problem in the ROW variables and then evaluates the resulting schedule
+in all scenarios. One optimality cut is generated for every scenario whose recourse cost is
+underestimated. Two features are retained to address the network structure of the problem.
+First, Pareto-oriented dual solutions are used to reduce the effect of dual degeneracy in
+15\n\nthe time-space flow problems. Second, a small number of autonomous cut-set inequalities
+are added to the recourse formulations to expose the end-to-end ROW requirement more
+directly. Before optimization, four exact reduction rules screen time-infeasible nodes, remove
+unreachable states, eliminate autonomous arcs that cannot appear under the ROW budget,
+and delete unused master variables.
+5.2. Exact reduction of the time-space networks
+The largest component of the deterministic equivalent is the replicated time-space flow
+network. We therefore reduce each commodity network before constructing either the deter-
+ministic equivalent or the Benders subproblems. The reduction consists of four exact rules
+applied in the following order.
+R1: Shortest-time window screening..LetD m(i,j)denote the shortest physical travel time
+from nodeito nodejin layerm. A time-space nodev m
+it can belong to a feasible path for
+commoditykonly if
+rk +D m(ok,i)≤t≤h k−D m(i,qk).(23)
+The lower bound is the earliest possible arrival atiafter release, and the upper bound is
+the latest time at which the destination remains reachable. Nodes violating (23) are never
+generated. The labels are computed separately for the two layers because their eligible link
+sets and travel times differ.
+R2: Exact forward–backward reachability..Theintervalin(23)isnecessarybutnotsufficient,
+particularly because the road layers contain no en-route waiting arcs. On the preliminary
+network produced by R1, letFm
+k be the nodes reachable fromσm
+k and letB m
+k be the nodes
+from whichdm
+k is reachable. We retain only
+˜︁Vm
+k =F m
+k ∩B m
+k (24)
+and arcs whose endpoints both belong to˜︁Vm
+k . Because the time-space networks are acyclic,
+both reachability searches require linear time in the size of the preliminary network.
+R3: Budget-aware autonomous-path pruning..Rules R1 and R2 use temporal feasibility but
+do not exploit the first-stage ROW budget. For an autonomous travel arce= (u,v) =
+(vA
+it,vA
+j,t+τ A
+ℓ
+)associated with entry pair(ℓ,t), define its required ROW-cell set and resource
+weight as
+R(e) ={(ℓ,s) :s∈I A
+ℓt}, ϱ e =
+∑︂
+s∈IA
+ℓt
+ρℓs.(25)
+Dispatch and delivery arcs have zero resource weight. Successive travel arcs on a time-space
+path occupy disjoint link–period cells because every travel arc advances time. Hence, the
+total resource required to activate a path is the sum of its arc weights.
+For each commodityk, define the forward and backward minimum-resource labels
+Φ+
+k (v) = min
+P∈P(σ A
+k,v)
+∑︂
+e∈P
+ϱe,(26)
+Φ−
+k (v) = min
+P∈P(v,d A
+k )
+∑︂
+e∈P
+ϱe,(27)
+16\n\nwhere a label is+∞if the corresponding path set is empty. An autonomous travel arc
+e= (u,v)is deleted whenever
+Φ+
+k (u) +ϱe + Φ−
+k (v)>B.(28)
+Indeed, every autonomous path containingewould then require more ROW resources than
+the first-stage budget permits. If
+Φ+
+k (dA
+k )>B,(29)
+commoditykhas no budget-feasible autonomous path; its autonomous network is removed
+andz A,ω
+k = 0is fixed for all scenarios. The labels can be computed by forward and backward
+shortest-path passes on the acyclic network. After deletions, they may be recomputed until
+no additional arc satisfies (28).
+R4: Unused ROW-candidate elimination..After R1–R3, a candidate cell(ℓ,s)is retained
+only if it protects at least one surviving autonomous travel arc. Formally, define
+Cred =
+{︂
+(ℓ,s)∈C:∃k∈K, t∈T, e∈E A,T
+k,ℓt withs∈I A
+ℓt
+}︂
+.(30)
+Every variable indexed byC\C red is fixed to zero and removed from the master problem.
+The reduced candidate set replacesCin all subsequent models.
+Lemma 1(Exactness of the four reduction rules).Applying R1–R4 does not change the
+optimal value of the two-stage stochastic program. Moreover, for every retained first-stage
+schedule, the reduced scenario networks yield the same recourse values as the unreduced
+networks.
+Proof.For R1, a node earlier thanrk +Dm(ok,i)cannot be reached after release, whereas a
+node later thanhk−Dm(i,qk)cannot reach the destination by the deadline. For R2, a node
+outsideF m
+k cannot be reached from the source, and a node outsideBm
+k cannot reach the
+sink. Nodes and arcs deleted by these two rules therefore cannot carry flow on any feasible
+source-to-sink path.
+For R3, every path containing arce= (u,v)consists of a source–uprefix, arce, and
+av–sink suffix. Its required resource is at leastΦ +
+k (u) +ϱ e + Φ−
+k (v). If this lower bound
+exceedsB, noy∈Ycan activate that path. Condition (29) applies the same argument to
+all autonomous paths of a commodity.
+Finally, a cell removed by R4 protects no surviving autonomous traversal. Activating it
+cannot increase autonomous feasibility, consumes positive deployment resources and nonneg-
+ative deployment cost, and can only weakly reduce conventional capacity because∆ℓs≥0.
+Thus, an optimal solution exists with that decision fixed to zero. The four rules consequently
+preserve both all potentially optimal recourse flows and at least one globally optimal first-
+stage schedule.
+5.3. Exact Pareto-oriented Benders cuts
+For notational economy, write the recourse problem for scenarioωas
+Qω(y) = min
+xω≥0
+q⊤
+ωxω (31)
+s.t.W ωxω≥h ω−Tωy.(32)
+17\n\nThe vectorx ω collects autonomous flow, conventional flow, mode-split, and emergency-
+service variables. Flow-balance equalities are represented by unrestricted dual variables,
+or equivalently by pairs of inequalities. All dependence onyappears in the right-hand side
+of the autonomous and conventional capacity constraints in the base formulation. When the
+optional cut-set inequalities are included, their right-hand-side coefficients are also incorpo-
+rated inTω.
+Let
+Πω =
+{︁
+πω :W ⊤
+ωπω≤q ω, πω satisfies the appropriate sign restrictions
+}︁
+(33)
+be the dual feasible region. Strong duality gives
+Qω(y) = max
+πω∈Πω
+(hω−Tωy)⊤πω.(34)
+Ifˆ︁πr
+ω is optimal at the trial scheduleˆ︁yr, then
+θω≥h⊤
+ωˆ︁πr
+ω−y⊤T⊤
+ωˆ︁πr
+ω (35)
+is a globally valid Benders optimality cut and is tight atˆ︁yr.
+Time-space network flow problems are frequently dual-degenerate. Several dual solutions
+can be optimal atˆ︁yr, while the corresponding cuts can differ substantially away from that
+schedule. We select a Pareto-oriented dual solution using a core pointyc,r in the relative
+interior of the continuous relaxation ofY. After computingQω(ˆ︁yr), we solve
+max
+πω∈Πω
+(hω−Tωyc,r)⊤πω (36)
+s.t.(h ω−Tωˆ︁yr)⊤πω =Q ω(ˆ︁yr).(37)
+Constraint (37) restricts the auxiliary problem to the dual optimal face atˆ︁yr. The objective
+then selects a member of that face that is strongest at the core point. Denote the resulting
+solution byπP,r
+ω . Replacingˆ︁πr
+ω withπ P,r
+ω in (35) gives the cut
+θω≥h⊤
+ωπP,r
+ω −y⊤T⊤
+ωπP,r
+ω .(38)
+The core point is initialized, for example, by settingyc,0
+ℓt =ηfor every candidate, where
+0<η <min
+{︄
+1, B∑︁
+(ℓ,t)∈Cρℓt
+}︄
+.(39)
+It is updated after iterationraccording to
+yc,r+1 =γy c,r + (1−γ)ˆ︁yr,0<γ <1.(40)
+We useγ= 0.7in the base implementation and examine the sensitivity of this value only if
+the Pareto variant proves computationally useful.
+The coefficient of a link-period decision also has an operational interpretation. Letµωr
+ℓts
+denote the nonnegative shadow price of the traversal-protection constraint for entry pair
+18\n\n(ℓ,t)and occupied periods, and letν ωr
+ℓs denote the nonnegative shadow price of conven-
+tional capacity in cell(ℓ,s), under a consistent sign convention. The capacity-constraint
+contribution to the coefficient ofyℓs is
+−
+∑︂
+t:s∈I A
+ℓt
+UA,ω
+ℓt µωr
+ℓts + ∆ℓsνωr
+ℓs.(41)
+The first term aggregates all entry batches that still occupy linkℓin periods; the second
+prices the conventional capacity removed when the ROW is activated. Thus, the cut rep-
+resents both the temporal coupling created by a multi-period traversal and the capacity
+trade-off between the two freight technologies.
+When the optional cut-set inequalities in Section 5.4 are included in the recourse formu-
+lation, their dual variables also contribute to the complete Benders coefficient. In particular,
+ifλ ωr
+kΓ ≥0is the shadow price of the cut-set inequality for commoditykand cutΓ, the
+additional contribution toyℓs is
+−UA,ω
+ℓs
+∑︂
+k∈K
+∑︂
+Γ∈Gk:(ℓ,s)∈Γ
+λωr
+kΓ,(42)
+whereG k is the selected cut-set family. Equation (41) is the complete coefficient when cut-set
+augmentation is not used, and the sum of (41) and (42) is used otherwise.
+5.4. Autonomous cut-set augmentation
+The end-to-end requirement is already enforced by the autonomous flow-balance and
+capacity constraints. Its connection to the ROW variables is nevertheless distributed over
+many arc constraints. We therefore add a small number of redundant but valid inequali-
+ties that expose this connection more directly. Because these inequalities are implied even
+for fractionaly, they do not strengthen the recourse relaxation or changeQ ω(y). Their
+algorithmic role is instead to enrich the dual representation and potentially produce more
+informative Benders cuts from a degenerate recourse problem.
+For commodityk, letΓ⊆Cbe an autonomous controlled cut set: every path fromσA
+k to
+dA
+k uses at least one travel arc that enters a link–period pair inΓ. Then, for every scenario
+ω,
+zA,ω
+k ≤
+∑︂
+(ℓ,t)∈Γ
+UA,ω
+ℓt yℓt.(43)
+Proposition 3(Validity of the autonomous cut-set inequality).Inequality(43)is valid for
+every feasible second-stage solution for every0≤y≤1. Together with the separate bound
+zA,ω
+k ≤d ω
+k, it does not change the recourse functionQω(y)on the continuous relaxation of
+the first-stage domain.
+Proof.Every unit of autonomous flow assigned to commoditykmust cross the controlled cut
+setΓ. For every(ℓ,t)∈Γ, the entry-period member of (15), obtained by settings=t∈I A
+ℓt,
+impliesF A,ω
+ℓt ≤U A,ω
+ℓt yℓt. The flow of commoditykacross that pair is no greater than the
+aggregate entry flowFA,ω
+ℓt . Summing over the cut and applying flow conservation gives (43).
+This argument uses only linear constraints and therefore remains valid whenyis fractional.
+The demand bound follows directly from (13).
+19\n\nThe uncapped coefficient in (43) is important for the decomposition. Replacing it by
+min{dω
+k,U A,ω
+ℓt }produces an inequality that is valid for binary ROW schedules but is not
+necessarily implied by the recourse formulation whenyis fractional. We therefore keep the
+demand restriction separate and use only the relaxation-valid form in the exact Benders
+method. This preserves the recourse function evaluated at fractional core points and the
+standard interpretation of the Pareto-oriented auxiliary problem.
+Thecutsetsarecomputedonceduringpreprocessing. Dispatchanddeliveryarcsreceivea
+sufficiently large separation capacity, while a controlled travel arc receives a nominal capacity
+such as U
+A
+ℓt. A standard minimum-cut calculation then identifies one controlled cut set.
+To limit model size, the base implementation generates one minimum cut for each time-
+dependentcommoditybelongingtothe20ODpairswiththelargestmeannighttimedemand.
+The same cut-set topology is reused across scenarios, while its coefficients remain scenario
+dependent throughU A,ω
+ℓt . A second distinct cut may be examined as an optional extension
+only when its enumeration rule is specified and implemented reproducibly. The base method
+does not rely on such an additional cut or on dynamic cut separation.
+5.5. Parallel multi-cut Benders algorithm
+LetR ω index the Pareto-oriented Benders cuts generated for scenarioω. At iterationr,
+the restricted master problem is
+min
+y,θ
+∑︂
+(ℓ,t)∈C
+gℓtyℓt +
+∑︂
+ω∈Ω
+pωθω (44)
+s.t.y∈Y,(45)
+θω≥0, ω∈Ω,(46)
+θω≥h⊤
+ωπP,j
+ω −y⊤T⊤
+ωπP,j
+ω , ω∈Ω, j∈R ω.(47)
+The initial boundθω≥0is valid under the nonnegative-cost assumption used in Proposi-
+tion 1. It provides an explicit and reproducible initialization; no separate family of network-
+relaxation cuts is generated.
+Let(ˆ︁yr,ˆ︁θr)be an optimal solution of the restricted master. Its objective value is a lower
+bound:
+LBr =
+∑︂
+(ℓ,t)∈C
+gℓtˆ︁yr
+ℓt +
+∑︂
+ω∈Ω
+pωˆ︁θr
+ω.(48)
+After all scenario problems have been solved, the same ROW schedule gives the imple-
+mentable upper bound
+UBr = min
+⎧
+⎨
+⎩UBr−1,
+∑︂
+(ℓ,t)∈C
+gℓtˆ︁yr
+ℓt +
+∑︂
+ω∈Ω
+pωQω(ˆ︁yr)
+⎫
+⎬
+⎭.(49)
+The algorithm terminates when
+UBr−LBr
+max{1,|UBr|}≤ε.(50)
+20\n\nAlgorithm 1. Parallel multi-cut Benders decomposition
+1. Apply R1–R4 in Section 5.2: shortest-time screening, forward–backward reachability,
+budget-aware autonomous-path pruning, and unused ROW-candidate elimination. On the
+resulting networks, precompute the selected autonomous cut sets.
+2. Initialize the restricted master with (45)–(46), choose a core pointyc,0, and setLB←−∞
+andUB←+∞.
+3. Solve the restricted master and obtain(ˆ︁yr,ˆ︁θr). Update the lower bound using (48).
+4. In parallel, solveQω(ˆ︁yr)for everyω∈Ω. Use all recourse values to update the incumbent
+and the upper bound through (49).
+5. For each scenario satisfyingQω(ˆ︁yr)> ˆ︁θr
+ω +ϵ cut, solve (36)–(37), verify the resulting cut at
+ˆ︁yr, and add cut (38). If the auxiliary problem fails the numerical checks, add the ordinary
+optimal-dual cut (35) instead.
+6. Update the core point using (40). If (50) is not satisfied, setr←r+ 1and return to Step
+3.
+7. Return the incumbent ROW schedule and its scenario freight plans.
+In implementation, the dual multipliers are read under a single standardized row conven-
+tion, and every candidate cut is checked for tightness at its generation point. The equality
+defining the optimal dual face is enforced at the solver feasibility tolerance. If the auxiliary
+problem is numerically infeasible or its cut fails the tightness check, the ordinary optimal dual
+from the recourse solve is used. This fallback preserves exactness because it still generates a
+valid optimality cut at the underestimated schedule.
+Scenario-level parallelism is used before any lower-level parallelization. To make timing
+comparisons reproducible, the master receives one thread and the remaining thread budget
+is divided among scenario workers. All generated exact cuts are retained. No dynamic
+relaxation cuts, resource-cover separation, or cut-pool deletion rules are used in the main
+implementation.
+The standard finite-convergence argument for integer Benders decomposition applies.
+The cut-set inequalities do not alter the recourse function, and each accepted Pareto-oriented
+cut or fallback ordinary cut is an exact optimality cut that is tight at the evaluated schedule.
+If a schedule is underestimated, at least one violated cut is added. Because the first-stage
+set contains finitely many binary ROW schedules, Algorithm 1 terminates finitely with an
+optimal solution when the scenario set is finite, all optimization problems are solved exactly,
+andε= 0.
+References
+21\n\nTable 1: Main notation.
+Symbol Definition
+Sets
+N;LSets of physical road nodes and directed links.
+LA⊆LPhysical links that can potentially be operated as ROWs.
+T={0,1,...,H}Set of timestamps in the nighttime planning horizon.
+M={A,H}Autonomous and conventional transportation layers.
+KSet of freight commodities.
+ΩSet of stochastic scenarios.
+C⊆L×TCandidate physical link–period combinations for ROW activation.
+V m
+k ;E m
+k Time-space nodes and arcs retained for commoditykin layerm.
+E m,R
+k Origin-dispatch arcs from terminalσm
+k to feasible departure-time copies ofok in layer
+m.
+E m,W
+k En-route waiting-arc set, withEm,W
+k =∅for both layers.
+E m,T
+k,ℓt Travel arcs of commoditykentering linkℓat timetin layerm.
+I A
+ℓt Periods during which an autonomous truck entering linkℓattoccupies that link.
+Gk Selected family of autonomous controlled cut sets for commodityk.
+δ+
+km(v);δ −
+km(v)Outgoing and incoming arcs of nodevfor commoditykin layerm.
+Parameters
+pω Probability of scenarioω.
+ok;q k Origin and destination of commodityk.
+σm
+k ;d m
+k Virtual origin terminal and dummy sink of commoditykin layerm.
+rk;h k Release time and delivery deadline of commodityk.
+τ m
+ℓ Travel time of physical linkℓin layerm.
+Dm(i,j)Shortest physical travel time from nodeito nodejin layerm; layerAuses ROW-
+capable links.
+B;ρ ℓt Available deployment resource; resource required by ROW(ℓ,t).
+gℓt Cost of managing and enforcing ROW(ℓ,t).
+dω
+k Realized demand of commoditykin scenarioω.
+ς0;ς k Standard deviations of the common and commodity-specific log-demand factors.
+U A,ω
+ℓt Usable autonomous capacity on(ℓ,t)if its ROW is active.
+RH,ω
+ℓt Residual general-road capacity after background traffic.
+∆ℓt General-road capacity transferred away when(ℓ,t)becomes a ROW.
+cm,ω
+e Unit operating cost on time-space arcein layerm∈{A,H}.
+Mk Unit emergency outsourcing or postponement cost for commodityk.
+bm
+kv Flow-balance coefficient: 1 atσm
+k ,−1atd m
+k , and 0 otherwise.
+Decision variables
+yℓt 1 if physical linkℓoperates as a ROW in periodt; 0 otherwise.
+f m,ω
+ke Flow of commoditykon time-space arcein layermand scenarioω.
+F A,ω
+ℓt Aggregate autonomous freight entering physical linkℓat timet.
+zm,ω
+k Amount of commoditykassigned to modemin scenarioω.
+sω
+k Amount of commoditykassigned to the emergency option.
+22

@@ -1,0 +1,22 @@
+{
+  "method": "BD (plain ordinary Benders)",
+  "objective": 28719.076236050278,
+  "first_stage": 4956.333333333333,
+  "expected_recourse": 23762.742902716946,
+  "LB": 25500.883293728453,
+  "UB": 28719.076236050278,
+  "gap": 0.11205767608507247,
+  "iterations": 151,
+  "cuts": 1500,
+  "exact_benders_cuts": 1500,
+  "nr_cuts": 0,
+  "ordinary_cuts": 1500,
+  "pareto_cuts": 0,
+  "pareto_auxiliary_lps": 0,
+  "instance": "R04_Y1",
+  "number_of_scenarios": 10,
+  "algorithm_seconds": 299.9310359954834,
+  "stopped_by_time_limit": true,
+  "termination_reason": "time_limit",
+  "cut_audit": "not_run"
+}
