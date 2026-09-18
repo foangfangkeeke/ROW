@@ -1,0 +1,23 @@
+{
+  "R1_shortest_time": {
+    "enabled": true,
+    "arcs_before": 31117,
+    "arcs_after": 7569
+  },
+  "R2_reachability": {
+    "enabled": true,
+    "arcs_before": 7569,
+    "arcs_after": 7569
+  },
+  "R3_budget_paths": {
+    "enabled": true,
+    "arcs_before": 5941,
+    "arcs_after": 5941
+  },
+  "candidate_cells_before": 498,
+  "candidate_cells_after": 498,
+  "time_space_arcs": 8293,
+  "time_space_travel_arcs": 7569,
+  "fixed_autonomous_commodities": [],
+  "preprocessing_seconds": 0.0010001659393310547
+}
