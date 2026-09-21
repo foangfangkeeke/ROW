@@ -1,0 +1,7 @@
+Excel: C:\faq_work\Papers\ROW\数据\R10_ROW_H1_M10.xlsx
+instance=R10_Y1_S20_H1_M10
+nodes=20, physical_arcs=120, commodities=40, periods=36
+candidates=720, scenarios S10/S20/S30=10/20/30
+travel-time audit: tau_A<tau_H=120, tau_A=tau_H=0, tau_A>tau_H=0, zero-period arcs=0.
+delta<=R_H verified for 129600 cells; nonnegative costs and scenario-probability normalization verified.
+Mapping: Physical_Arcs(tail,head)->links; Fine_Periods.period->T; ROW_Candidates(arc_id,ROW_block)->C; Capacity_Base with link/time shocks -> (U_A,R_H); Demand_Scenarios -> d^omega; Scenario_Index -> p^omega.

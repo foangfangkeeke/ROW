@@ -1,0 +1,17 @@
+{
+  "iteration": 2,
+  "UB": 292350.26134195685,
+  "LB": 292063.57384195685,
+  "gap": 0.0009806302162482653,
+  "incumbent_first_stage_cost": 0.0,
+  "incumbent_expected_recourse_cost": 292350.26134195685,
+  "exact_benders_cuts": 40,
+  "nr_cuts": 60,
+  "total_cuts": 100,
+  "master_seconds": 0.021072864532470703,
+  "exact_recourse_seconds": 254.36079382896423,
+  "pareto_auxiliary_seconds": 10.53732180595398,
+  "nr_relaxation_seconds": 262.2049448490143,
+  "elapsed_seconds": 789.5621676445007,
+  "status": "converged"
+}
