@@ -75,3 +75,16 @@ class TestTimeSpaceMicroCases(unittest.TestCase):
             self.assertLessEqual(bd['gap'], 1e-8, msg=mode)
             self.assertEqual([], cut_audit(d, n, {1: 1.0}, bd['cut_records']), msg=mode)
             self.assertEqual([], cut_audit(d, n, {1: 1.0}, bd['nr_cut_records'], relaxation=True), msg=mode)
+
+    def test_extensive_form_enforces_resource_budget(self):
+        d = toy(candidates=[(1, 1), (1, 2), (1, 3)])
+        d.params['resource_budget'] = 1.0
+        n = build_network(d)
+        reference = min(
+            Recourse(d, n, 1).solve(dict(zip(d.candidates, bits)))['value']
+            for bits in itertools.product((0.0, 1.0), repeat=3)
+            if sum(bits) <= 1.0
+        )
+        ef = solve_extensive(d, n, {1: 1.0}, gap=1e-8)
+        self.assertLessEqual(sum(ef['y'].values()), 1.0 + 1e-8)
+        self.assertAlmostEqual(reference, ef['objective'], places=6)

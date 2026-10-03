@@ -9,6 +9,9 @@ def solve_extensive(d:Data,n:Network,scenarios:dict[int,float],gap=1e-6,time_lim
  started=time.time(); m=cplex.Cplex();m.set_log_stream(None);m.set_results_stream(None);m.set_warning_stream(None);m.set_error_stream(None);m.objective.set_sense(m.objective.sense.minimize)
  cells=list(d.candidates); names=[f'y_{a}_{t}' for a,t in cells]; yidx={z:i for i,z in enumerate(cells)}
  m.variables.add(names=names,obj=[d.activation_cost(cell) for cell in cells],types=['B']*len(cells),lb=[0.]*len(cells),ub=[1.]*len(cells))
+ m.linear_constraints.add(
+  lin_expr=[cplex.SparsePair(list(range(len(cells))),[d.resource(cell) for cell in cells])],
+  senses=['L'],rhs=[float(d.params['resource_budget'])],names=['resource_budget'])
  rows=[]; rhs=[]; senses=[]; flowvars={}; zvars={}; all_names=list(names)
  for s,p in scenarios.items():
   flow={}; z={}
