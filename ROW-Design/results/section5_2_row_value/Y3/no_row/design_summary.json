@@ -1,0 +1,11 @@
+{
+  "method": "fixed_zero",
+  "seconds": 0.0,
+  "iterations": 0,
+  "termination_reason": "not_optimized",
+  "gap": null,
+  "network": "Sioux_Falls_30OD",
+  "demand_level": "Y3",
+  "scenario_set": "S10",
+  "instance_id": "Sioux_Falls_30OD_Y3_S10_H1_M10"
+}

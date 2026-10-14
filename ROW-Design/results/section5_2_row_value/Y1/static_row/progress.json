@@ -1,0 +1,10 @@
+{
+  "iteration": 99,
+  "UB": 167224.5055861955,
+  "LB": 73379.51579022089,
+  "gap": 0.5611916116421252,
+  "exact_benders_cuts": 980,
+  "nr_cuts": 30,
+  "elapsed_seconds": 7247.206154346466,
+  "status": "time_limit"
+}
