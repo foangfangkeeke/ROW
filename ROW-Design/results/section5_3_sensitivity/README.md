@@ -16,8 +16,10 @@ Current formal run:
 The reported scope is intentionally limited to `Y1/S10`. Results for `Y3/S10`
 and `Y5/S10` were not run and are not included. All 10 completed design solves
 reached the 7200-second limit; their total elapsed time was 20.63 hours. The
-saved incumbents, bounds, gaps, and statuses are therefore reported as the
-completed sensitivity evidence rather than presented as proven optima.
+saved incumbents, bounds, gaps, and statuses are retained only as computational
+records. Because none of the cases converged, these values do not support a
+sensitivity direction, a ranking among parameter settings, monotonicity, or an
+optimality conclusion.
 
 Each budget value is a fraction of the total resource weight of all candidate
 ROW cells, not a fraction of the baseline budget or of the incumbent design.
@@ -26,7 +28,12 @@ The command for this reported scope is:
 
 ```powershell
 cd C:\faq_work\Papers\ROW\ROW-Design
-conda run -n row-design-cplex221 python tools\run_5_3_sensitivity.py
+conda run -n row-design-cplex221 python tools\run_5_3_sensitivity.py `
+  --network Sioux_Falls_30OD --demand-level Y1 --scenario-set S10 `
+  --dimensions budget background demand `
+  --mip-gap 0.01 --time-limit 7200 --master-time-limit 600 --max-iter 500 `
+  --max-scenario-workers 4 --solver-threads 1 --parallel-scenarios `
+  --out results\reproduced\section5_3_sensitivity
 ```
 
 `aggregate.csv` is the main summary table. It includes objective values, component costs, ROW usage metrics, `design_gap`, `design_status`, and elapsed time for each sensitivity case.

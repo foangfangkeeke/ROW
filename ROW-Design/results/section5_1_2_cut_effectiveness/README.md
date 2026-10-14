@@ -6,6 +6,19 @@
 - 3 种算法：BD、BD-P、BD-P-NR。
 - 总组数：`8 * 3 = 24`。
 
+## 复现命令
+
+在 `ROW-Design` 目录运行。单独的输出目录不会覆盖已提交结果。
+
+```powershell
+conda run -n row-design-cplex221 python tools\run_5_1_2_cut_effectiveness.py `
+  --instances R04 R05 R06 R07 R08 R09 R10 Sioux_Falls_30OD `
+  --methods BD BD-P BD-P-NR --scenario-set S10 `
+  --mip-gap 0.01 --time-limit 7200 --master-time-limit 600 --max-iter 500 `
+  --max-scenario-workers 4 --solver-threads 1 --parallel-scenarios `
+  --out results\reproduced\section5_1_2_cut_effectiveness
+```
+
 ## 先看结论
 
 当前结果已经有论文 5.1.2 表格需要的信息。最重要的入口文件是：
@@ -132,3 +145,4 @@ R04/
 - BD-P 在 8 个算例中有 5 个达到 1% gap，而 plain BD 只有 1 个达到。
 - NR cuts 提供额外强化，但在当前实现和参数下，其额外生成成本使 BD-P-NR 不总是比 BD-P 更快。
 - 对 R05、R10 和 Sioux_Falls_30OD，结果应按 time-limit case 报告最终 gap、LB 和 UB，而不是仅比较 wall-clock time。
+- Data note: `aggregate.csv` has 24 rows for 8 networks times 3 methods. Required table fields are present: `objective`, `UB`, `LB`, `reported_gap`, `solution_time_seconds`, `benders_iterations`, cut counts, and termination fields. Run-level `summary.json`, `progress.csv`, `progress.json`, and `row_schedule_incumbent.csv` are present under each network/method directory.

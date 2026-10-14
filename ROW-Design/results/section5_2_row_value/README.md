@@ -12,7 +12,12 @@ This directory contains the Section 5.2 policy comparison produced by `tools/run
 
 ```powershell
 cd C:\faq_work\Papers\ROW\ROW-Design
-conda run -n row-design-cplex221 python tools\run_5_2_row_value.py --demand-levels Y1 Y3 Y5
+conda run -n row-design-cplex221 python tools\run_5_2_row_value.py `
+  --network Sioux_Falls_30OD --demand-levels Y1 Y3 Y5 --scenario-set S10 `
+  --policies no_row static_row ave_row stochastic_row `
+  --mip-gap 0.01 --time-limit 7200 --master-time-limit 600 --max-iter 500 `
+  --max-scenario-workers 4 --solver-threads 1 --parallel-scenarios `
+  --out results\reproduced\section5_2_row_value
 ```
 
 ## Current Output Status
@@ -54,3 +59,9 @@ Each policy directory contains:
 ## Reading Notes
 
 The blank `row_entry_capacity_utilization` and `design_gap` cells in each demand-level table occur on the `no_row` policy. That policy has no ROW capacity and is not optimized, so those values are not applicable rather than missing.
+
+All `static_row`, `ave_row`, and `stochastic_row` design runs ended at the time
+limit, with final gaps between 0.4064 and 0.8092. Their reported objectives are
+evaluations of the saved feasible incumbents under a common computational
+budget. They do not establish an optimal policy ranking or a conclusive value
+of stochastic optimization.
