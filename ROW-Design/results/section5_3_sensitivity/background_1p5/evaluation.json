@@ -1,0 +1,20 @@
+{
+  "objective": 150958.85797792976,
+  "fixed_cost": 6546.75,
+  "expected_recourse_cost": 144412.10797792976,
+  "A_transport_cost": 100060.16912297519,
+  "H_transport_cost": 44351.93885495412,
+  "outsourcing_cost": 0.0,
+  "A_volume_share": 0.8012840710259648,
+  "H_volume_share": 0.19871592897403534,
+  "E_volume_share": 0.0,
+  "average_release_to_delivery_periods": 13.709937674689659,
+  "average_network_transport_periods": 3.0202057120089107,
+  "open_directed_arcs": 53,
+  "open_lane_hours": 124,
+  "ROW_resource_usage": 86.125,
+  "weighted_budget_usage": 0.9856938483547926,
+  "row_entering_flow": 30257.124497625053,
+  "row_entry_capacity": 266627.4603656361,
+  "row_entry_capacity_utilization": 0.11348090124000108
+}

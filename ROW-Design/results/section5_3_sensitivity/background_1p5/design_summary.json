@@ -1,0 +1,66 @@
+{
+  "method": "BD-P-NR",
+  "objective": 150958.85797792976,
+  "first_stage": 6546.75,
+  "expected_recourse": 144412.10797792976,
+  "LB": 38582.22803277874,
+  "UB": 150958.85797792976,
+  "gap": 0.744418919501766,
+  "iterations": 74,
+  "cuts": 760,
+  "exact_benders_cuts": 730,
+  "nr_cuts": 30,
+  "ordinary_cuts": 0,
+  "pareto_cuts": 730,
+  "fallback_cuts": 0,
+  "pareto_auxiliary_lps": 730,
+  "initial_master_bound_before_nr": 0.0,
+  "root_bound_after_nr": 35880.86041584167,
+  "root_bound_improvement": 35880.86041584167,
+  "timing_seconds": {
+    "master": 19.09863018989563,
+    "exact_recourse": 6524.718727350235,
+    "pareto_auxiliary": 485.7165584564209,
+    "nr_relaxation": 271.65568375587463,
+    "root_nr_generation": 271.90681433677673
+  },
+  "seconds": 7305.303990840912,
+  "stopped_by_time_limit": true,
+  "termination_reason": "time_limit",
+  "parallel_scenarios": true,
+  "scenario_workers": 4,
+  "solver_threads_per_model": 1,
+  "network": "Sioux_Falls_30OD",
+  "demand_level": "Y1",
+  "scenario_set": "S10",
+  "instance_id": "Sioux_Falls_30OD_Y1_S10_H1_M10",
+  "policy": "stochastic_row",
+  "design_scenario_set": "S10",
+  "sensitivity_dimension": "background",
+  "sensitivity_value": 1.5,
+  "sensitivity_case": "background_1p5",
+  "sensitivity_description": "background traffic factor=1.5",
+  "baseline_reduction_stats": {
+    "R1_shortest_time": {
+      "enabled": true,
+      "arcs_before": 80300,
+      "arcs_after": 13132
+    },
+    "R2_reachability": {
+      "enabled": true,
+      "arcs_before": 13132,
+      "arcs_after": 13132
+    },
+    "R3_budget_paths": {
+      "enabled": true,
+      "arcs_before": 10517,
+      "arcs_after": 10517
+    },
+    "candidate_cells_before": 456,
+    "candidate_cells_after": 456,
+    "time_space_arcs": 14346,
+    "time_space_travel_arcs": 13132,
+    "fixed_autonomous_commodities": [],
+    "preprocessing_seconds": 0.0009989738464355469
+  }
+}
