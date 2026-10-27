@@ -90,3 +90,7 @@ conda run -n row-design-cplex221 python -m pytest -q
 - Do not run repository archive files (`*.rar`) as source.
 - Prefer direct Python commands above over ad hoc wrapper scripts unless a task explicitly asks for a wrapper.
 - Generated outputs go under `ROW-Design\results\...`.
+
+## Optional CPLEX 22.2 environment
+
+For CPLEX 22.2 use a separate `row-design-cplex222` environment with Python 3.12. From `ROW-Design`, create it with `conda env create -f environment-cplex222.yml`, activate it, then run `python -m pip install --no-deps -e .`. The environment file installs CPLEX 22.2.0.1 Community Edition, which is size limited. Large experiments require a working licensed 22.2 Python API/runtime; see `ROW-Design/README.md` for validation and the optional interactive executable setting. Do not modify or replace the original 22.1 environment. CPLEX 22.2 with Python 3.12 passed six micro tests on Linux, but the full licensed experiment and Windows setup have not been verified.

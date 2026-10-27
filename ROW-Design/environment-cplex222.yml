@@ -1,0 +1,10 @@
+name: row-design-cplex222
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+      - cplex==22.2.0.1
+      - openpyxl==3.1.5
+      - pytest==9.1.1
